@@ -4,7 +4,7 @@
 
 Name:           python-%{srcname}
 %global         pypi_version    0.5.2
-Version:        v%{pypi_version}
+Version:        %{pypi_version}
 Release:        %autorelease
 Summary:        Simple, safe way to store and distribute tensors
 License:        Apache-2.0
@@ -12,7 +12,7 @@ URL:            https://pypi.org/project/%{srcname}
 Source0:        %{pypi_source %{srcname} %{pypi_version}}
 # LICENSE is not included in the source
 # PR for fix https://github.com/huggingface/safetensors/pull/416
-Source1: https://github.com/huggingface/%{srcname}/raw/%{version}/LICENSE
+Source1: https://github.com/huggingface/%{srcname}/raw/v%{version}/LICENSE
 
 BuildArch:      noarch
 
