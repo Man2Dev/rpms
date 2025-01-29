@@ -4,7 +4,7 @@
 
 Name:           python-%{srcname}
 %global         pypi_version    0.5.2
-Version:        %{pypi_version}
+Version:        v%{pypi_version}
 Release:        %autorelease
 Summary:        Simple, safe way to store and distribute tensors
 License:        Apache-2.0
@@ -12,7 +12,7 @@ URL:            https://pypi.org/project/%{srcname}
 Source0:        %{pypi_source %{srcname} %{pypi_version}}
 # LICENSE is not included in the source
 # PR for fix https://github.com/huggingface/safetensors/pull/416
-Source1: https://github.com/huggingface/%{srcname}/raw/v%{version}/LICENSE
+Source1: https://github.com/huggingface/%{srcname}/raw/%{version}/LICENSE
 
 BuildArch:      noarch
 
@@ -45,7 +45,6 @@ BuildRequires:  python%{python3_pkgversion}dist(pytest-benchmark)
 BuildRequires:  python%{python3_pkgversion}dist(timeout-decorator)
 BuildRequires:  python%{python3_pkgversion}dist(tqdm)
 BuildRequires:  python%{python3_pkgversion}dist(huggingface-hub)
-BuildRequires:  python%{python3_pkgversion}dist(setuptools-rust)
 BuildRequires:  python%{python3_pkgversion}dist(hypothesis)
 BuildRequires:  python%{python3_pkgversion}dist(flake8)
 BuildRequires:  python%{python3_pkgversion}dist(isort)
@@ -79,7 +78,13 @@ BuildRequires:  python%{python3_pkgversion}dist(black)
 # safetensors/Cargo.toml
 # BuildRequires:  rust-pyo3_0.23*
 # https://crates.io/crates/pyo3
+BuildRequires:  rust-pythonize+default-devel
+BuildRequires:  rust-pythonize-devel
+BuildRequires:  rust-pyo3_0.22+default-devel
+BuildRequires:  rust-pyo3+default-devel
 BuildRequires:  rust-pyo3-macros-devel
+BuildRequires:  rust-pyo3-macros0.22+default-devel
+BuildRequires:  rust-pyo3-macros-backend0.22+default-devel
 BuildRequires:  rust-pyo3-macros-backend-devel
 BuildRequires:  rust-pyo3-macros-backend+default-devel
 BuildRequires:  rust-pyo3-macros+multiple-pymethods-devel
@@ -91,6 +96,7 @@ BuildRequires:  rust-pyo3-build-config-devel
 BuildRequires:  rust-pyo3-build-config+resolve-config-devel
 BuildRequires:  rust-pyo3-build-config+extension-module-devel
 BuildRequires:  rust-pyo3-build-config+default-devel
+BuildRequires:  rust-pyo3-build-config0.22+default-devel
 BuildRequires:  rust-pyo3-build-config+abi3-py38-devel
 BuildRequires:  rust-pyo3-build-config+abi3-devel
 BuildRequires:  rust-pyo3+abi3-py38-devel
@@ -171,10 +177,13 @@ Summary:        %{summary}
 
 %prep
 %autosetup -n %{srcname}-%{pypi_version}
+%cargo_prep
 cp -p %{SOURCE1} %{buildroot}
 
 %generate_buildrequires
-%pyproject_buildrequires
+# %%pyproject_buildrequires -r
+%pyproject_buildrequires -x pip,setuptools,setuptools-rust,maturin,torch,torchaudio,torchtext,torchvision,numpy,absl-py,elasticsearch,fastprogress,h5py,matplotlib,nltk,packaging,pandas,pandas-datareader,pandas-flavor,psutil,pytest,pytest-benchmark,timeout-decorator,tqdm,huggingface-hub,hypothesis,flake8,isort,click,black
+%cargo_generate_buildrequires -f rust-pyo3_0.22+abi3-py38-devel,rust-pyo3_0.22-devel,rust-pyo3_0.22+abi3-devel,rust-pyo3+abi3-py38-devel,rust-memmap2-devel,rust-memmap2+default-devel,rust-pyo3_0.22+abi3-py38-devel,rust-pyo3_0.22-devel,rust-pyo3_0.22+abi3-devel,rust-pyo3_0.22+default-devel,rust-pyo3+default-devel,rust-serde_json+default-devel
 
 %build
 %pyproject_wheel
