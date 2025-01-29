@@ -80,9 +80,11 @@ BuildRequires:  python%{python3_pkgversion}dist(black)
 # https://crates.io/crates/pyo3
 BuildRequires:  rust-pythonize+default-devel
 BuildRequires:  rust-pythonize-devel
+BuildRequires:	rust-pyo3+full-devel
 BuildRequires:  rust-pyo3_0.22+default-devel
 BuildRequires:  rust-pyo3+default-devel
 BuildRequires:  rust-pyo3-macros-devel
+BuildRequires:  rust-pyo3+pyo3-macros-devel
 BuildRequires:  rust-pyo3-macros0.22+default-devel
 BuildRequires:  rust-pyo3-macros-backend0.22+default-devel
 BuildRequires:  rust-pyo3-macros-backend-devel
@@ -126,6 +128,7 @@ BuildRequires:  rust-memmap2+default-devel
 BuildRequires:  rust-memmap2+stable_deref_trait-devel
 BuildRequires:  rust-memmap2-devel
 # https://crates.io/crates/safetensors
+# https://src.fedoraproject.org/rpms/rust-safetensors/pull-request/1
 BuildRequires:  rust-safetensors-devel
 BuildRequires:  rust-safetensors+default-devel
 BuildRequires:  rust-proptest-devel
@@ -146,6 +149,14 @@ BuildRequires:  rust-hashbrown+raw-entry-devel
 BuildRequires:  rust-hashbrown+rayon-devel
 BuildRequires:  rust-hashbrown+serde-devel
 BuildRequires:  rust-pyo3_0.22+hashbrown-devel
+BuildRequires:  rust-proc-macro2-devel
+BuildRequires:  rust-proc-macro2+default-devel
+BuildRequires:  rust-proc-macro2+proc-macro-devel
+BuildRequires:  rust-proc-macro2+span-locations-devel
+BuildRequires:  rust-proc-macro2-diagnostics-devel
+BuildRequires:  rust-proc-macro2-diagnostics+default-devel
+BuildRequires:  rust-proc-macro2-diagnostics+colors-devel
+BuildRequires:  rust-proc-macro2-diagnostics+yansi-devel
 
 BuildRequires:  git-core
 BuildRequires:  pyproject-rpm-macros
